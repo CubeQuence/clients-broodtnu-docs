@@ -1,2 +1,2 @@
-# docs
-Documentation for our code.
+# Initial page
+
