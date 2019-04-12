@@ -1,6 +1,11 @@
 # Table of contents
 
 * [Home](README.md)
-* [API v1](v1/README.md)
-  * [Endpoints](v1/untitled.md)
+* [Handleiding](handleiding.md)
+* [FAQ](faq.md)
+
+## API
+
+* [v1](api/v1/README.md)
+  * [Endpoints](api/v1/untitled.md)
 

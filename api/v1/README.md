@@ -1,4 +1,4 @@
-# API v1
+# v1
 
 This describes the resources that make up the official LunchBox REST API. If you have any problems or requests, please contact [LunchBox Support](https://lunchbox.nl/contact).
 
