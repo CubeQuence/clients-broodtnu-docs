@@ -4,6 +4,6 @@
 
 ## API
 
-* [REST API v1](api/rest-api-v1.md)
-* [Endpoints](api/endpoints.md)
+* [API v1](api/v1/README.md)
+  * [Endpoints](api/v1/untitled.md)
 
