@@ -1,7 +1,6 @@
 # Table of contents
 
 * [Home](README.md)
-* [Handleiding](handleiding.md)
 * [FAQ](faq.md)
 
 ## API

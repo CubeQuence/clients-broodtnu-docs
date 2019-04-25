@@ -15,20 +15,20 @@ This describes the resources that make up the official LunchBox REST API. If you
 
 ### Schema
 
-All API access is over HTTPS, and accessed from `https://api.lunchbox.nl`. All data is sent and received as JSON.
+All API access is over HTTPS, and accessed from `https://api.broodt.nu`. All data is sent and received as JSON.
 
 ```http
-curl -i https://api.lunchbox.nl/ping
+curl -i https://api.broodt.nu/ping
 HTTP/1.1 200 OK
-Server: nginx
-Date: Fri, 12 Oct 2012 23:33:14 GMT
-Content-Type: application/json; charset=utf-8
-Connection: keep-alive
-Status: 200 OK
-ETag: "a00049ba79152d03380c34652f2cb612"
-Content-Length: 5
-Cache-Control: max-age=0, private, must-revalidate
-X-Content-Type-Options: nosniff
+Date: Thu, 25 Apr 2019 20:52:39 +0200
+Connection: close
+X-Powered-By: PHP/7.3.3
+Cache-Control: no-cache, private
+Date: Thu, 25 Apr 2019 18:52:39 GMT
+Content-Type: application/json
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE
+Access-Control-Allow-Headers: Authorization, Content-Type
 ```
 
 Blank fields are included as `null` instead of being omitted.
@@ -39,7 +39,7 @@ All timestamps return in ISO 8601 format:
 YYYY-MM-DDTHH:MM:SSZ
 ```
 
-We use the `CEST (GMT+1)` time zone.
+We use the `CET (GMT+1)` time zone.
 
 ### Authentication
 
@@ -48,7 +48,7 @@ To authenticate trough the LunchBox  ****API, we use `Bearer` tokens. These can 
 #### Bearer token \(sent in a header\)
 
 ```bash
-curl -H "Authorization: token BEARER-TOKEN" https://api.lunchbox.nl
+curl -H "Authorization: Bearer BEARER-TOKEN" https://api.broodt.nu
 ```
 
 #### Failed login
@@ -56,7 +56,7 @@ curl -H "Authorization: token BEARER-TOKEN" https://api.lunchbox.nl
 Authenticating with invalid credentials will return `401 Unauthorized`:
 
 ```bash
-curl -H "Authorization: token fooBar" https://api.lunchbox.nl/products
+curl -H "Authorization: Bearer fooBar" https://api.broodt.nu/user
 HTTP/1.1 401 Unauthorized
 {
   "message": "Bad credentials",
@@ -69,7 +69,7 @@ HTTP/1.1 401 Unauthorized
 Many API methods take optional parameters. For `GET` requests, any parameters not specified as a segment in the path can be passed as an HTTP query string parameter:
 
 ```bash
-curl "https://api.lunchbox.nl/products/12?foo=Bar"
+curl "https://api.broodt.nu/products/12?foo=Bar"
 ```
 
 In this example, the '12' value is provided for the `:productId` parameter in the path while `:foo` is passed in the query string.
@@ -77,7 +77,7 @@ In this example, the '12' value is provided for the `:productId` parameter in th
 For `POST`, `PATCH`, `PUT`, and `DELETE` requests, parameters not included in the URL should be encoded as JSON with a Content-Type of `application/json`:
 
 ```bash
-curl -d '{"items":["12"]}' https://api.lunchbox.nl/cart
+curl -d '{"items":["12"]}' https://api.broodt.nu/cart
 ```
 
 ### Root endpoint
@@ -85,7 +85,7 @@ curl -d '{"items":["12"]}' https://api.lunchbox.nl/cart
 You can issue a `GET` request to the root endpoint to get all the endpoint categories that the  API supports:
 
 ```bash
-curl https://api.lunchbox.nl
+curl https://api.broodt.nu
 ```
 
 ### Client errors
@@ -169,7 +169,7 @@ The API supports Cross Origin Resource Sharing \(CORS\) for AJAX requests from a
 Here's a sample request sent from a browser hitting `http://example.com`:
 
 ```text
-curl -i https://api.lunchbox.nl -H "Origin: http://example.com"
+curl -i https://api.broodt.nu -H "Origin: http://example.com"
 HTTP/1.1 302 Found
 Access-Control-Allow-Origin: *
 Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
@@ -178,7 +178,7 @@ Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-Ra
 This is what the CORS preflight request looks like:
 
 ```text
-curl -i https://api.lunchbox.nl -H "Origin: http://example.com" -X OPTIONS
+curl -i https://api.broodt.nu -H "Origin: http://example.com" -X OPTIONS
 HTTP/1.1 204 No Content
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-GitHub-OTP, X-Requested-With
