@@ -1,6 +1,6 @@
 # Endpoints
 
-### General Endpoints
+### +General Endpoints
 
 {% api-method method="get" host="https://api.broodt.nu" path="/" %}
 {% api-method-summary %}
@@ -79,7 +79,8 @@ Provide the front-end with required variables
 
 ```javascript
 {
-  "captcha_key": "6Lf2QaAUAAAAAO_gyyQadNMJHvvTI2X607eqDRmY"
+  "captcha_public_key": "6Lf2QaAUAAAAAO_gyyQadNMJHvvTI2X607eqDRmY",
+  "jwt_public_key": "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL5YuQ9ibofjYCFzY4UCs21nhEJHOjtk\nEQaQqW5ajI4NNIvXxyyKfa8\/znLkl8dmvF5i5dX7Q2sDv1cV7xQj0tMCAwEAAQ==\n-----END PUBLIC KEY-----"
 }
 ```
 {% endapi-method-response-example %}
@@ -116,23 +117,15 @@ Bearer fooBar
 ```
 {% endapi-method-response-example %}
 
-{% api-method-response-example httpCode=302 %}
+{% api-method-response-example httpCode=400 %}
 {% api-method-response-example-description %}
 If no \`access\_token\` is provided.
 {% endapi-method-response-example-description %}
 
-```
-
-```
-{% endapi-method-response-example %}
-
-{% api-method-response-example httpCode=304 %}
-{% api-method-response-example-description %}
-If the \`access\_token\` has expired.
-{% endapi-method-response-example-description %}
-
-```
-
+```javascript
+{
+  "error": "Access_token not provided."
+}
 ```
 {% endapi-method-response-example %}
 
@@ -143,7 +136,19 @@ If the \`access\_token\` is invalid.
 
 ```javascript
 {
+  "error": "Access_token has invalid signature."
+}
+```
+{% endapi-method-response-example %}
 
+{% api-method-response-example httpCode=403 %}
+{% api-method-response-example-description %}
+If the \`access\_token\` has expired.
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "error": "Access_token has expired."
 }
 ```
 {% endapi-method-response-example %}
@@ -165,16 +170,20 @@ Create a user account.
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="name" type="string" required=true %}
+{% api-method-parameter name="captcha\_response" type="string" required=true %}
+The response of the recaptcha checkbox
+{% endapi-method-parameter %}
 
+{% api-method-parameter name="name" type="string" required=true %}
+max:50\|alpha\_num
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="email" type="string" required=true %}
-
+max:255\|unique
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="password" type="string" required=true %}
-
+min:8
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -185,8 +194,49 @@ Create a user account.
 
 {% endapi-method-response-example-description %}
 
+```javascript
+{
+  "name": "fooBar",
+  "email": "fooBar@example.com",
+  "updated_at": "2019-04-26 18:15:31",
+  "created_at": "2019-04-26 18:15:31",
+  "id": 1
+}
 ```
+{% endapi-method-response-example %}
 
+{% api-method-response-example httpCode=401 %}
+{% api-method-response-example-description %}
+No or invalid captcha is provided
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "error": "invalid captcha"
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=422 %}
+{% api-method-response-example-description %}
+Not all required fields are passed
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "captcha_response": [
+    "The captcha response field is required."
+  ],
+  "name": [
+    "The name field is required."
+  ],
+  "email": [
+    "The email field is required."
+  ],
+  "password": [
+    "The password field is required."
+  ]
+}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -221,8 +271,44 @@ Login to your account.
 
 {% endapi-method-response-example-description %}
 
+```javascript
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MCIsImF1ZCI6Imh0dHBzOlwvXC9icm9vZHQubnUiLCJzdWIiOjIsInN1Yl9pcCI6Ils6OjFdIiwiaWF0IjoxNTU2Mjk5MjIxLCJleHAiOjE1NTYzMDAxMjF9.YG8YcS4TxqOwOSPTaOtkFkKoaH4hjaFTwdE63cWexCKaKMdx9ewmTPCFcfDa4uSTJG9RixskFEwU0MjvBppyCg",
+  "refresh_token": "wLVJkrwcT3YQHAjs2KKyY3f81PTssZuT"
+}
 ```
+{% endapi-method-response-example %}
 
+{% api-method-response-example httpCode=401 %}
+{% api-method-response-example-description %}
+Invalid credentials are passed
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "errors": {
+    "email or password": [
+      "is invalid"
+    ]
+  }
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=422 %}
+{% api-method-response-example-description %}
+Not all required fields are passed
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "email": [
+    "The email field is required."
+  ],
+  "password": [
+    "The password field is required."
+  ]
+}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -253,8 +339,24 @@ Revoke the \`refresh\_token\`.
 
 {% endapi-method-response-example-description %}
 
+```javascript
+{
+  "success": true
+}
 ```
+{% endapi-method-response-example %}
 
+{% api-method-response-example httpCode=422 %}
+{% api-method-response-example-description %}
+Not all required fields are passed
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "refresh_token": [
+    "The refresh token field is required."
+  ]
+}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -285,8 +387,25 @@ Refresh \`access\_token\` and get a new \`refresh\_token\`.
 
 {% endapi-method-response-example-description %}
 
+```javascript
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MCIsImF1ZCI6Imh0dHBzOlwvXC9icm9vZHQubnUiLCJzdWIiOjIsInN1Yl9pcCI6Ils6OjFdIiwiaWF0IjoxNTU2Mjk5NTcwLCJleHAiOjE1NTYzMDA0NzB9.RG2iYZd1pEiMqWuPhJ833cG_VWn07P_0vDBp1ub0KM8NQS88_8OsCsn_Mm_nzs4eoxKJmf0HbIo21H4a_Qovrg",
+  "refresh_token": "kDIWC3L7n053qsXiB7a7OifIz6FehwUu"
+}
 ```
+{% endapi-method-response-example %}
 
+{% api-method-response-example httpCode=422 %}
+{% api-method-response-example-description %}
+Not all required fields are passed
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "refresh_token": [
+    "The refresh token field is required."
+  ]
+}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -322,10 +441,10 @@ Bearer fooBar
 ```javascript
 {
   "id": 1,
-  "name": "Lavada Leuschke",
-  "email": "jessika27@example.org",
-  "created_at": "2019-04-25 13:45:58",
-  "updated_at": "2019-04-25 13:45:58"
+  "name": "fooBar",
+  "email": "fooBar@example.com",
+  "created_at": "2019-04-26 18:15:31",
+  "updated_at": "2019-04-26 18:15:31"
 }
 ```
 {% endapi-method-response-example %}
@@ -371,19 +490,13 @@ Bearer fooBar
 
 {% endapi-method-response-example-description %}
 
-```
-
-```
-{% endapi-method-response-example %}
-
-{% api-method-response-example httpCode=302 %}
-{% api-method-response-example-description %}
-If the provided data isn't valid.
-{% endapi-method-response-example-description %}
-
-```
+```javascript
 {
-
+  "id": 1,
+  "name": "fooBar",
+  "email": "fooBar@example.com",
+  "created_at": "2019-04-26 18:15:31",
+  "updated_at": "2019-04-26 18:15:31"
 }
 ```
 {% endapi-method-response-example %}
