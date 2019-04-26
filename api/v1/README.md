@@ -89,20 +89,31 @@ curl https://api.broodt.nu
 
 ### Client errors
 
-There are two possible types of client errors on API calls that receive request bodies:
+There are three possible types of client errors on API calls that receive request bodies:
 
-1. Sending invalid JSON will result in a `400 Bad Request` response.
+1. Not sending a JSON body will result in a `400 Bad Request`response.
 
    ```http
    HTTP/1.1 400 Bad Request
    Content-Length: 40
 
    {
-       "message":"Body should be a JSON object"
+       "error":"Body should be a JSON object"
    }
    ```
 
-2. Sending invalid fields will result in a `422 Unprocessable Entity` response.
+2. Sending invalid JSON will result in a `400 Bad Request` response.
+
+   ```http
+   HTTP/1.1 400 Bad Request
+   Content-Length: 35
+
+   {
+       "error":"Problems parsing JSON"
+   }
+   ```
+
+3. Sending invalid fields will result in a `422 Unprocessable Entity` response.
 
    ```http
    HTTP/1.1 422 Unprocessable Entity
