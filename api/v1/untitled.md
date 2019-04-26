@@ -1,5 +1,7 @@
 # Endpoints
 
+### General Endpoints
+
 {% api-method method="get" host="https://api.broodt.nu" path="/" %}
 {% api-method-summary %}
 Root
@@ -85,7 +87,71 @@ Provide the front-end with required variables
 {% endapi-method-spec %}
 {% endapi-method %}
 
-#### User Endpoints
+{% api-method method="get" host="https://api.broodt.nu" path="/foo/bar" %}
+{% api-method-summary %}
+Protected Request
+{% endapi-method-summary %}
+
+{% api-method-description %}
+This is the default for an authenticated request.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+Bearer fooBar
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```javascript
+{}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=302 %}
+{% api-method-response-example-description %}
+If no \`access\_token\` is provided.
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=304 %}
+{% api-method-response-example-description %}
+If the \`access\_token\` has expired.
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=401 %}
+{% api-method-response-example-description %}
+If the \`access\_token\` is invalid.
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+### User Endpoints
 
 {% api-method method="get" host="https://api.broodt.nu" path="/user" %}
 {% api-method-summary %}
@@ -159,6 +225,50 @@ Bearer fooBar
 
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=302 %}
+{% api-method-response-example-description %}
+If the provided data isn't valid.
+{% endapi-method-response-example-description %}
+
+```
+{
+
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="delete" host="https://api.broodt.nu" path="/user" %}
+{% api-method-summary %}
+Delete Profile
+{% endapi-method-summary %}
+
+{% api-method-description %}
+Delete the profile of the logged in user.
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+Bearer fooBar
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=204 %}
 {% api-method-response-example-description %}
 
 {% endapi-method-response-example-description %}
