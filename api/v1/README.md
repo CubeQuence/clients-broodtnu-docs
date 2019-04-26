@@ -82,7 +82,7 @@ curl -d '{"items":["12"]}' https://api.broodt.nu/cart
 
 ### Root endpoint
 
-You can issue a `GET` request to the root endpoint to get all the endpoint categories that the  API supports:
+You can issue a `GET` request to the root endpoint to get the documentation url:
 
 ```bash
 curl https://api.broodt.nu
@@ -90,27 +90,20 @@ curl https://api.broodt.nu
 
 ### Client errors
 
-There are three possible types of client errors on API calls that receive request bodies:
+There are two possible types of client errors on API calls that receive request bodies:
 
 1. Sending invalid JSON will result in a `400 Bad Request` response.
 
    ```http
    HTTP/1.1 400 Bad Request
-   Content-Length: 35
-
-   {"message":"Problems parsing JSON"}
-   ```
-
-2. Sending the wrong type of JSON values will result in a `400 Bad Request` response.
-
-   ```http
-   HTTP/1.1 400 Bad Request
    Content-Length: 40
 
-   {"message":"Body should be a JSON object"}
+   {
+       "message":"Body should be a JSON object"
+   }
    ```
 
-3. Sending invalid fields will result in a `422 Unprocessable Entity` response.
+2. Sending invalid fields will result in a `422 Unprocessable Entity` response.
 
    ```http
    HTTP/1.1 422 Unprocessable Entity
@@ -172,7 +165,8 @@ Here's a sample request sent from a browser hitting `http://example.com`:
 curl -i https://api.broodt.nu -H "Origin: http://example.com"
 HTTP/1.1 302 Found
 Access-Control-Allow-Origin: *
-Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE
+Access-Control-Allow-Headers: Authorization, Content-Type
 ```
 
 This is what the CORS preflight request looks like:
@@ -181,10 +175,8 @@ This is what the CORS preflight request looks like:
 curl -i https://api.broodt.nu -H "Origin: http://example.com" -X OPTIONS
 HTTP/1.1 204 No Content
 Access-Control-Allow-Origin: *
-Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-GitHub-OTP, X-Requested-With
-Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE
-Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
-Access-Control-Max-Age: 86400
+Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE
+Access-Control-Allow-Headers: Authorization, Content-Type
 ```
 
 
