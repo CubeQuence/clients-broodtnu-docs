@@ -22,7 +22,6 @@ curl -i https://api.broodt.nu/ping
 HTTP/1.1 200 OK
 Date: Thu, 25 Apr 2019 20:52:39 +0200
 Connection: close
-X-Powered-By: PHP/7.3.3
 Cache-Control: no-cache, private
 Date: Thu, 25 Apr 2019 18:52:39 GMT
 Content-Type: application/json
@@ -161,7 +160,7 @@ The API supports Cross Origin Resource Sharing \(CORS\) for AJAX requests from a
 
 Here's a sample request sent from a browser hitting `http://example.com`:
 
-```text
+```http
 curl -i https://api.broodt.nu -H "Origin: http://example.com"
 HTTP/1.1 302 Found
 Access-Control-Allow-Origin: *
@@ -171,7 +170,7 @@ Access-Control-Allow-Headers: Authorization, Content-Type
 
 This is what the CORS preflight request looks like:
 
-```text
+```http
 curl -i https://api.broodt.nu -H "Origin: http://example.com" -X OPTIONS
 HTTP/1.1 204 No Content
 Access-Control-Allow-Origin: *
