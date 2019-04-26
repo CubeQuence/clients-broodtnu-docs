@@ -87,7 +87,7 @@ Provide the front-end with required variables
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="get" host="https://api.broodt.nu" path="/foo/bar" %}
+{% api-method method="head" host="https://api.broodt.nu" path="/foo/bar" %}
 {% api-method-summary %}
 Protected Request
 {% endapi-method-summary %}
