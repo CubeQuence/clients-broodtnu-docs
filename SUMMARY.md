@@ -6,5 +6,9 @@
 ## API
 
 * [v1](api/v1/README.md)
-  * [Endpoints](api/v1/untitled.md)
+  * [General](api/v1/general.md)
+  * [Authentication / Authorization](api/v1/auth.md)
+  * [User](api/v1/user.md)
+  * [Products](api/v1/products.md)
+  * [Tags](api/v1/tags.md)
 
