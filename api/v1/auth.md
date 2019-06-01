@@ -85,6 +85,52 @@ Incorrect or empty fields passed
 {% endapi-method-spec %}
 {% endapi-method %}
 
+{% api-method method="post" host="https://api.broodt.nu" path="/auth/verify" %}
+{% api-method-summary %}
+Verify Email
+{% endapi-method-summary %}
+
+{% api-method-description %}
+Activate your account
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="verify\_email\_token" type="string" required=true %}
+
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=204 %}
+{% api-method-response-example-description %}
+Account verification successful
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=422 %}
+{% api-method-response-example-description %}
+Incorrect or empty fields passed
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "verify_email_token": [
+    "The selected verify email token is invalid."
+  ]
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
 {% api-method method="post" host="https://api.broodt.nu" path="/auth/login" %}
 {% api-method-summary %}
 Login
@@ -168,6 +214,12 @@ Revoke the 'refresh\_token'
 
 {% api-method-spec %}
 {% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+'Bearer ' + \`access\_token\`
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+
 {% api-method-body-parameters %}
 {% api-method-parameter name="refresh\_token" type="string" required=true %}
 
@@ -198,52 +250,6 @@ Incorrect or empty fields passed
 {
   "refresh_token": [
     "The refresh token field is required."
-  ]
-}
-```
-{% endapi-method-response-example %}
-{% endapi-method-response %}
-{% endapi-method-spec %}
-{% endapi-method %}
-
-{% api-method method="post" host="https://api.broodt.nu" path="/auth/verify" %}
-{% api-method-summary %}
-Verify Email
-{% endapi-method-summary %}
-
-{% api-method-description %}
-Activate your account
-{% endapi-method-description %}
-
-{% api-method-spec %}
-{% api-method-request %}
-{% api-method-body-parameters %}
-{% api-method-parameter name="verify\_email\_token" type="string" required=true %}
-
-{% endapi-method-parameter %}
-{% endapi-method-body-parameters %}
-{% endapi-method-request %}
-
-{% api-method-response %}
-{% api-method-response-example httpCode=204 %}
-{% api-method-response-example-description %}
-Account verification successful
-{% endapi-method-response-example-description %}
-
-```
-
-```
-{% endapi-method-response-example %}
-
-{% api-method-response-example httpCode=422 %}
-{% api-method-response-example-description %}
-Incorrect or empty fields passed
-{% endapi-method-response-example-description %}
-
-```javascript
-{
-  "verify_email_token": [
-    "The selected verify email token is invalid."
   ]
 }
 ```
@@ -352,5 +358,35 @@ Password reset successful
 {% endapi-method-spec %}
 {% endapi-method %}
 
+{% api-method method="get" host="https://api.broodt.nu" path="/auth/sessions" %}
+{% api-method-summary %}
+User Sessions
+{% endapi-method-summary %}
 
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+'Bearer ' + \`access\_token\`
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
 
