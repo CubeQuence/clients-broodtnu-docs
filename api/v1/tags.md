@@ -13,7 +13,7 @@ Show all tags
 {% api-method-request %}
 {% api-method-headers %}
 {% api-method-parameter name="Authorization" type="string" required=true %}
-'Bearer ' + access\_token
+'Bearer ' + \`access\_token\`
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
 {% endapi-method-request %}
@@ -64,16 +64,23 @@ Show specific tag\(s\)
 {% endapi-method-summary %}
 
 {% api-method-description %}
-Show specific tag\(s\). Multiple can be selected by a comma separated list.
+
 {% endapi-method-description %}
 
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-path-parameters %}
-{% api-method-parameter name="Authorization" type="string" required=true %}
-'Bearer ' + access\_token
+{% api-method-parameter name="tag\_id\'s" type="string" required=true %}
+Multiple tags can be selected by a comma separated list.  
+\(e.g. \`/tags/1,2\`\)
 {% endapi-method-parameter %}
 {% endapi-method-path-parameters %}
+
+{% api-method-headers %}
+{% api-method-parameter name="Authorization" type="string" required=true %}
+'Bearer ' + \`access\_token\`
+{% endapi-method-parameter %}
+{% endapi-method-headers %}
 {% endapi-method-request %}
 
 {% api-method-response %}
@@ -112,9 +119,16 @@ Show all products containing specified tag\(s\).
 
 {% api-method-spec %}
 {% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="tag\_id\'s" type="string" required=true %}
+Multiple tags can be filtererd by a comma separated list.  
+\(e.g. \`/tags/1,2/products\`\) This wil only show products containing both \`tag 1\` and \`tag 2\`.
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+
 {% api-method-headers %}
 {% api-method-parameter name="Authorization" type="string" required=true %}
-'Bearer ' + access\_token
+'Bearer ' + \`access\_token\`
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
 {% endapi-method-request %}
