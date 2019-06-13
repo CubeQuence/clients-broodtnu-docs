@@ -6,34 +6,6 @@ Root
 {% endapi-method-summary %}
 
 {% api-method-description %}
-Show the available endpoints
-{% endapi-method-description %}
-
-{% api-method-spec %}
-{% api-method-request %}
-
-{% api-method-response %}
-{% api-method-response-example httpCode=200 %}
-{% api-method-response-example-description %}
-
-{% endapi-method-response-example-description %}
-
-```javascript
-{
-  "documentation_url": "https://docs.broodt.nu"
-}
-```
-{% endapi-method-response-example %}
-{% endapi-method-response %}
-{% endapi-method-spec %}
-{% endapi-method %}
-
-{% api-method method="get" host="https://api.broodt.nu" path="/meta" %}
-{% api-method-summary %}
-Meta
-{% endapi-method-summary %}
-
-{% api-method-description %}
 Provide the front-end with required variables
 {% endapi-method-description %}
 
@@ -48,8 +20,9 @@ Provide the front-end with required variables
 
 ```javascript
 {
-  "captcha_public_key": "6Lf2QaAUAAAAAO_gyyQadNMJHvvTI2X607eqDRmY",
-  "jwt_public_key": "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL5YuQ9ibofjYCFzY4UCs21nhEJHOjtk\nEQaQqW5ajI4NNIvXxyyKfa8\/znLkl8dmvF5i5dX7Q2sDv1cV7xQj0tMCAwEAAQ==\n-----END PUBLIC KEY-----"
+    "time": "2019-06-13 18:54:18",
+    "captcha_public_key": "6Lf2QaAUAAAAAO_gyyQadNMJHvvTI2X607eqDRmY",
+    "jwt_public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxYOZG/jbX3UcQLKRTqA/\n/gBQEhES1POCfzFromcZHdA6AOYl9OgmQdnQq3SNIMf/IZXTiQL6Z6GOVw98jke2\nOUxxoxOdQDl+mdlRpQtkZXW3urxlFfvXrwUJkuOI2UWbv3tf5eN9slNgMiLaKqhW\nLScqkjTjUH9vycaBb9PME7PNqzQWeTxiTa8tx5Yn3Vy1t1Lkg4EW4o4nEMczPfEC\ndDN65pMDfo1mMTJx6a6+4twcmj3Zsc+7NFZr29zBh84VAR/JILHS0hdxRXSlaZ4+\nmgjqegJuHVbKFVr7N7CikOLu6PSliruqt8qHE3uT2988Izt/DICUCC1hA/j0Ct7b\nvQIDAQAB\n-----END PUBLIC KEY-----"
 }
 ```
 {% endapi-method-response-example %}
@@ -57,7 +30,7 @@ Provide the front-end with required variables
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="head" host="https://api.broodt.nu" path="/foo/bar" %}
+{% api-method method="head" host="https://api.broodt.nu" path="/fooBar" %}
 {% api-method-summary %}
 Protected Request
 {% endapi-method-summary %}
@@ -88,36 +61,48 @@ Bearer fooBar
 
 {% api-method-response-example httpCode=400 %}
 {% api-method-response-example-description %}
-If no \`access\_token\` is provided.
+If no "access\_token" was provided.
 {% endapi-method-response-example-description %}
 
 ```javascript
 {
-  "error": "Access_token not provided."
+  "error": "access_token not provided"
 }
 ```
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=401 %}
 {% api-method-response-example-description %}
-If the \`access\_token\` is invalid.
+If the "access\_token" is invalid.
 {% endapi-method-response-example-description %}
 
 ```javascript
 {
-  "error": "Access_token has invalid signature."
+  "error": "access_token invalid"
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=402 %}
+{% api-method-response-example-description %}
+If the "access\_token" claim "sub\_ip" doesn't match the IP of the request origin.
+{% endapi-method-response-example-description %}
+
+```javascript
+{
+  "error": "access_token invalid"
 }
 ```
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=403 %}
 {% api-method-response-example-description %}
-If the \`access\_token\` has expired.
+If the "access\_token" has expired.
 {% endapi-method-response-example-description %}
 
 ```javascript
 {
-  "error": "Access_token has expired."
+  "error": "access_token has expired"
 }
 ```
 {% endapi-method-response-example %}
