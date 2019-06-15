@@ -204,7 +204,7 @@ Incorrect or empty fields passed
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.broodt.nu" path="/auth/login" %}
+{% api-method method="post" host="https://api.broodt.nu" path="/auth/logout" %}
 {% api-method-summary %}
 Logout
 {% endapi-method-summary %}
@@ -220,39 +220,16 @@ Revoke the "refresh\_token"
 'Bearer ' + access\_token
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
-
-{% api-method-body-parameters %}
-{% api-method-parameter name="refresh\_token" type="string" required=true %}
-
-{% endapi-method-parameter %}
-{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
-{% api-method-response-example httpCode=200 %}
+{% api-method-response-example httpCode=204 %}
 {% api-method-response-example-description %}
 Refresh successful
 {% endapi-method-response-example-description %}
 
 ```javascript
-{
-  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MCIsImF1ZCI6Imh0dHBzOlwvXC9icm9vZHQubnUiLCJzdWIiOjIsInN1Yl9pcCI6Ils6OjFdIiwiaWF0IjoxNTU2Mjk5NTcwLCJleHAiOjE1NTYzMDA0NzB9.RG2iYZd1pEiMqWuPhJ833cG_VWn07P_0vDBp1ub0KM8NQS88_8OsCsn_Mm_nzs4eoxKJmf0HbIo21H4a_Qovrg",
-  "refresh_token": "kDIWC3L7n053qsXiB7a7OifIz6FehwUu"
-}
-```
-{% endapi-method-response-example %}
 
-{% api-method-response-example httpCode=422 %}
-{% api-method-response-example-description %}
-Incorrect or empty fields passed
-{% endapi-method-response-example-description %}
-
-```javascript
-{
-  "refresh_token": [
-    "The refresh token field is required."
-  ]
-}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}

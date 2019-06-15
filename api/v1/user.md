@@ -205,7 +205,7 @@ Revoke Session
 
 {% api-method-body-parameters %}
 {% api-method-parameter name="session\_uuid" type="string" required=true %}
-The id of the session to revoke
+The id of the session to revoke \(can't be current session\)
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
